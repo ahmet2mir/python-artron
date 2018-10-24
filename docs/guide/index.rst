@@ -1,0 +1,12 @@
+==========
+User Guide
+==========
+
+.. toctree::
+   :maxdepth: 2
+
+   installing
+   builder
+   task
+   progressbar
+   cli

@@ -21,11 +21,11 @@ __author__ = "Ahmet Demir <me@ahmet2mir.eu>"
 
 from setuptools import setup, find_packages
 
-version = '0.0.1'
+from artron.release import __version__
 
 setup(
     name='artron',
-    version=version,
+    version=__version__,
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     url='https://github.com/ahmet2mir/python-artron.git',

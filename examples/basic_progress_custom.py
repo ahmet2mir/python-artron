@@ -8,17 +8,27 @@ from pprint import pprint
 from artron.task import Task
 from artron.manager import Manager
 
-import logging
-import sys
 
-root = logging.getLogger("artron")
-root.setLevel(logging.DEBUG)
+class ProgressBar(object):
+    """Simple progress bar"""
+    def __init__(self, total=100):
+        self.total = total
+        self.n = 0
 
-ch = logging.StreamHandler(sys.stdout)
-ch.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-ch.setFormatter(formatter)
-root.addHandler(ch)
+    def update(self, count=1):
+        if self.n == 0:
+            sys.stdout.write("[%s]" % (" " * self.total))
+            sys.stdout.flush()
+            sys.stdout.write("\b" * (self.total+1))
+        for _ in range(0, min(count, self.total-self.n)):
+            sys.stdout.write("-")
+            sys.stdout.flush()
+        self.n += count
+
+    def close(self):
+        self.update(self.total - self.n)
+        sys.stdout.write("\n")
+
 
 class Builder(object):
     
@@ -33,13 +43,14 @@ class Builder(object):
     def builder_func_3(self, msg, retry):
         time.sleep(1)
         raise Exception("ERROR builder_func_3")
+        return "builder_func_3 ==> " + msg
 
     def builder_func_4(self, msg, retry):
         time.sleep(1)
         return "builder_func_4 ==> " + msg
 
-def process(run=True):
 
+def process():
     # builder to pass to Artron
     builder = Builder()
 
@@ -70,16 +81,14 @@ def process(run=True):
     manager.add(task5)
     manager.add(task6)
 
-    # if we should run
-    if run:
-        # start
-        results = manager.start()
-        pprint(results)
-        sys.exit(results['exit_code'])
-    # otherwise print tasks ids
-    else:
-        for task in manager.tasks.keys():
-            print("-", task)
+    # set progress bar
+    manager.progress = ProgressBar(total=len(manager.tasks))
+
+    # start
+    results = manager.start()
+    pprint(results)
+    sys.exit(results['exit_code'])
+
 
 if __name__ == '__main__':
     process()

@@ -5,9 +5,7 @@ Main hasks of this file came from six module
     six is under license MIT
 
 """
-import os
 import sys
-import importlib
 
 PY2 = sys.version_info[0] == 2
 
@@ -15,8 +13,8 @@ PY2 = sys.version_info[0] == 2
 
 if PY2:
     text_type = unicode
-    bytes = str
     string_types = (str, unicode)
+
     int_types = (int, long)
 
     range_type = xrange
@@ -34,6 +32,7 @@ if PY2:
 else:
     text_type = str
     string_types = (str,)
+
     int_types = (int,)
 
     range_type = range

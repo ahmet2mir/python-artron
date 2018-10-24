@@ -10,17 +10,19 @@ from artron._py6 import iteritems, itervalues
 from artron.task import Task
 
 class Graph(dict):
-    '''Graph extend dict'''
-    def __init__(self, tasks):
-        """Build oriented graph using edges.
+    """Graph class is an oriented graph are directed graphs having
+    no bidirected edges.
 
-        Parameters
-        ----------
-        tasks : dict
-            Dict of Task object in form {task_id: task...}
+    To get a complete Graph course, code and more generate,
+    go on http://www.python-course.eu/graphs_python.php
 
-        Example
-        -------
+    Args:
+        tasks (dict): dict with key as task id and value as task obj
+
+    Attributes:
+        size (int): Graph's tasks size.
+
+    Examples:
         >>> from artron import Task, Graph
         >>>
         >>> task1 = Task('for_test-tid1', {'msg': 'hello1'}, 'for_test')
@@ -42,20 +44,18 @@ class Graph(dict):
         >>>
         >>> graph = Graph(tasks)
         >>> graph
-        [
-            ('for_test-tid1', 'for_test-tid2'),
-            ('for_test-tid1', 'for_test-tid3'),
-            ('for_test-tid1', 'for_test-tid4'),
-            ('for_test-tid2', 'for_test-tid4'),
-            ('for_test-tid3', 'for_test-tid3'),
-            ('for_test-tid4', 'for_test-tid4')
-        ]
-
-        See also
-        --------
-        * http://www.python-course.eu/graphs_python.php
-        """
+        {
+            'for_test-tid4': [],
+            'for_test-tid1': ['for_test-tid2',
+            'for_test-tid3',
+            'for_test-tid4'],
+            'for_test-tid3': [],
+            'for_test-tid2': ['for_test-tid4']
+        }
+    """
+    def __init__(self, tasks):
         super(Graph, self).__init__()
+        self.size = len(tasks) #: ici
         for edge in self.__generate_edges(tasks):
 
             if not edge[0] in self:
@@ -65,6 +65,15 @@ class Graph(dict):
                 self[edge[0]].append(edge[1])
 
     def __setitem__(self, key, value):
+        """Graph inherit from dict, just ensure that value we pass is a list.
+
+        Args:
+            key (str): task id.
+            value (list): list of vertices.
+
+        Raises:
+            ValueError: if `value` is not a list.
+        """
         if isinstance(value, list):
             super(Graph, self).__setitem__(key, value)
         else:
@@ -73,23 +82,20 @@ class Graph(dict):
     def edges(self):
         """Generate oriented graph's edges
 
-        Returns
-        -------
-        edges : generator
-            Generator with a tuple of 2 vertices the edge ie. (A,B,)
-            where A depends on B
+        Yields:
+            tuple: a tuple of 2 vertices the edge ie. (A,B,)
+                   where A depends on B
 
-        Example
-        -------
-        >>> list(graph.edges())
-        [
-            ('for_test-tid1', 'for_test-tid2'),
-            ('for_test-tid1', 'for_test-tid3'),
-            ('for_test-tid1', 'for_test-tid4'),
-            ('for_test-tid2', 'for_test-tid4'),
-            ('for_test-tid3', 'for_test-tid3'),
-            ('for_test-tid4', 'for_test-tid4')
-        ]
+        Examples:
+            >>> list(graph.edges())
+            [
+                ('for_test-tid1', 'for_test-tid2'),
+                ('for_test-tid1', 'for_test-tid3'),
+                ('for_test-tid1', 'for_test-tid4'),
+                ('for_test-tid2', 'for_test-tid4'),
+                ('for_test-tid3', 'for_test-tid3'),
+                ('for_test-tid4', 'for_test-tid4')
+            ]
         """
         for vertex in self:
             if not self[vertex]:
@@ -99,36 +105,38 @@ class Graph(dict):
                     yield (vertex, neighbour,)
 
     def isolated_vertices(self):
-        """Returns a list of isolated vertices (ie no dependency)
+        """Generate a list of isolated vertices (ie no dependency)
 
-        Returns
-        -------
-        vertices : generator
-            Generator with all isolated vertices.
+        Yields:
+            str : isolated vertices.
 
-        Example
-        -------
-        >>> graph
-        [
-            ('for_test-tid1', 'for_test-tid2'),
-            ('for_test-tid1', 'for_test-tid3'),
-            ('for_test-tid1', 'for_test-tid4'),
-            ('for_test-tid2', 'for_test-tid4'),
-            ('for_test-tid3', 'for_test-tid3'),
-            ('for_test-tid4', 'for_test-tid4')
-        ]
-        >>> list(graph.isolated_vertices())
-        ['for_test-tid4', 'for_test-tid3']
+        Examples:
+            >>> graph
+            [
+                ('for_test-tid1', 'for_test-tid2'),
+                ('for_test-tid1', 'for_test-tid3'),
+                ('for_test-tid1', 'for_test-tid4'),
+                ('for_test-tid2', 'for_test-tid4'),
+                ('for_test-tid3', 'for_test-tid3'),
+                ('for_test-tid4', 'for_test-tid4')
+            ]
+            >>> list(graph.isolated_vertices())
+            ['for_test-tid4', 'for_test-tid3']
         """
         for key, value in iteritems(self):
             if not value:
                 yield key
 
     def remove_vertex(self, vertex):
-        """Remove vertex from graph and all childs."""
+        """Remove vertex from graph and all childs.
+
+        Args:
+            vertex (str): vertex to remove.
+        """
         del self[vertex]
         for value in itervalues(self):
-            value.remove(vertex)
+            if vertex in value:
+                value.remove(vertex)
 
     @staticmethod
     def __generate_edges(tasks):
@@ -136,15 +144,11 @@ class Graph(dict):
         Edges are directed from one vertex to another, the graph is called
         a directed graph. This function is used to construct the graph.
 
-        Parameters
-        ----------
-            tasks : dict
-                tasks dict in form {task_id: task, ...}
+        Args:
+            tasks (dict): tasks dict in form {task_id: task, ...}
 
-        Returns
-        -------
-            edges : generator
-                A generator with edges as tuple
+        Yields:
+            tuple: a tuple of 2 vertices the edge ie. (A,B,)
         """
         for task in tasks.values():
             if task.state != Task.STATE_INIT:

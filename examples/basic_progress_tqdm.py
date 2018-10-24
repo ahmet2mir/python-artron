@@ -5,20 +5,11 @@ import sys
 import time
 from pprint import pprint
 
+from tqdm import tqdm
+
 from artron.task import Task
 from artron.manager import Manager
 
-import logging
-import sys
-
-root = logging.getLogger("artron")
-root.setLevel(logging.DEBUG)
-
-ch = logging.StreamHandler(sys.stdout)
-ch.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-ch.setFormatter(formatter)
-root.addHandler(ch)
 
 class Builder(object):
     
@@ -33,13 +24,14 @@ class Builder(object):
     def builder_func_3(self, msg, retry):
         time.sleep(1)
         raise Exception("ERROR builder_func_3")
+        return "builder_func_3 ==> " + msg
 
     def builder_func_4(self, msg, retry):
         time.sleep(1)
         return "builder_func_4 ==> " + msg
 
-def process(run=True):
 
+def process():
     # builder to pass to Artron
     builder = Builder()
 
@@ -70,16 +62,14 @@ def process(run=True):
     manager.add(task5)
     manager.add(task6)
 
-    # if we should run
-    if run:
-        # start
-        results = manager.start()
-        pprint(results)
-        sys.exit(results['exit_code'])
-    # otherwise print tasks ids
-    else:
-        for task in manager.tasks.keys():
-            print("-", task)
+    # set progress bar
+    manager.progress = tqdm(total=len(manager.tasks))
+
+    # start
+    results = manager.start()
+    pprint(results)
+    sys.exit(results['exit_code'])
+
 
 if __name__ == '__main__':
     process()

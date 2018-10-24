@@ -1,6 +1,19 @@
 # Artron - multiprocess execution helper
 
+[![image](https://img.shields.io/pypi/l/artron.svg)](https://python.org/pypi/artron)
+
+[![image](https://badge.buildkite.com/79c7eccf056b17c3151f3c4d0e4c4b8b724539d84f1e037b9b.svg?branch=master)](https://code.kennethreitz.org/source/artron/)
+
+[![VSTS build status (Windows)](https://dev.azure.com/pypa/artron/_apis/build/status/artron%20CI%20(Windows)?branchName=master&label=Windows)](https://dev.azure.com/pypa/artron/_build/latest?definitionId=9&branchName=master)
+
+[![VSTS build status (Linux)](https://dev.azure.com/pypa/artron/_apis/build/status/artron%20CI%20(Linux)?branchName=master&label=Linux)](https://dev.azure.com/pypa/artron/_build/latest?definitionId=10&branchName=master)
+
+[![image](https://img.shields.io/pypi/pyversions/artron.svg)](https://python.org/pypi/artron)
+
+
+
 `Artron` is a simple `python` module to use `multiprocessing` with dependency graph and queue management allowing easy tool creation.
+
 ## Installation
 
 pip
@@ -263,3 +276,24 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+
+class ProgressBar(object):
+    """Simple progress bar"""
+    def __init__(self, total=100):
+        self.total = total
+        self.n = 0
+
+    def update(self, count=1):
+        if self.n == 0:
+            sys.stdout.write("[%s]" % (" " * self.total))
+            sys.stdout.flush()
+            sys.stdout.write("\b" * (self.total+1))
+        for _ in range(0, min(count, self.total-self.n)):
+            sys.stdout.write("-")
+            sys.stdout.flush()
+        self.n += count
+
+    def close(self):
+        self.update(self.total - self.n)
+        sys.stdout.write("\n")
