@@ -271,23 +271,3 @@ http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-
-class ProgressBar(object):
-    """Simple progress bar"""
-    def __init__(self, total=100):
-        self.total = total
-        self.n = 0
-
-    def update(self, count=1):
-        if self.n == 0:
-            sys.stdout.write("[%s]" % (" " * self.total))
-            sys.stdout.flush()
-            sys.stdout.write("\b" * (self.total+1))
-        for _ in range(0, min(count, self.total-self.n)):
-            sys.stdout.write("-")
-            sys.stdout.flush()
-        self.n += count
-
-    def close(self):
-        self.update(self.total - self.n)
-        sys.stdout.write("\n")
