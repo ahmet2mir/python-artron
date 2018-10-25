@@ -32,8 +32,21 @@ setup(
     author='Ahmet Demir',
     author_email='me@ahmet2mir.eu',
     description='Artron - multiprocessing with dependency graph and queue management allowing easy tool creation.',
-    license='License :: OSI Approved :: Apache Software License',
+    license='Apache 2.0',
     keywords=['artron', 'multiprocessing', 'parallel'],
     packages=find_packages(),
-    package_data = {'': ['README.md']}
+    package_data = {'': ['README.md']},
+    classifiers=[
+        'Development Status :: 2 - Pre-Alpha',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: Apache Software License',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Topic :: Software Development :: Build Tools',
+    ]
 )

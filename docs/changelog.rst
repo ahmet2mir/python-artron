@@ -2,6 +2,10 @@
 Changelog
 =========
 
+v0.0.4 - 25/10/2018
+===================
+- Add python versions to setup.py
+
 v0.0.3 - 25/10/2018
 ===================
 - Fix CI and doc
