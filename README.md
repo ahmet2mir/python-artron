@@ -1,9 +1,7 @@
 # Artron - multiprocess execution helper
 
 [![image](https://img.shields.io/pypi/l/artron.svg)](https://python.org/pypi/artron)
-
 [![image](https://img.shields.io/pypi/pyversions/artron.svg)](https://python.org/pypi/artron)
-
 [![Build Status](https://travis-ci.org/ahmet2mir/python-artron.svg?branch=master)](https://travis-ci.org/ahmet2mir/python-artron)
 
 `Artron` is a simple `python` module to use `multiprocessing` with dependency graph and queue management allowing easy tool creation.
