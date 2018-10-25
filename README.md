@@ -2,15 +2,9 @@
 
 [![image](https://img.shields.io/pypi/l/artron.svg)](https://python.org/pypi/artron)
 
-[![image](https://badge.buildkite.com/79c7eccf056b17c3151f3c4d0e4c4b8b724539d84f1e037b9b.svg?branch=master)](https://code.kennethreitz.org/source/artron/)
-
-[![VSTS build status (Windows)](https://dev.azure.com/pypa/artron/_apis/build/status/artron%20CI%20(Windows)?branchName=master&label=Windows)](https://dev.azure.com/pypa/artron/_build/latest?definitionId=9&branchName=master)
-
-[![VSTS build status (Linux)](https://dev.azure.com/pypa/artron/_apis/build/status/artron%20CI%20(Linux)?branchName=master&label=Linux)](https://dev.azure.com/pypa/artron/_build/latest?definitionId=10&branchName=master)
-
 [![image](https://img.shields.io/pypi/pyversions/artron.svg)](https://python.org/pypi/artron)
 
-
+[![Build Status](https://travis-ci.org/ahmet2mir/python-artron.svg?branch=master)](https://travis-ci.org/ahmet2mir/python-artron)
 
 `Artron` is a simple `python` module to use `multiprocessing` with dependency graph and queue management allowing easy tool creation.
 

@@ -20,10 +20,11 @@ import datetime
 # third
 import sphinx_rtd_theme
 
+sys.path.insert(0, os.path.abspath('.'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
 # local
 from artron.release import __version__
-
-sys.path.insert(0, os.path.abspath('.'))
 
 # -- Project information -----------------------------------------------------
 
