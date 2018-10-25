@@ -6,6 +6,8 @@
 
 `Artron` is a simple `python` module to use `multiprocessing` with dependency graph and queue management allowing easy tool creation.
 
+[Read the full documentation](https://artron.readthedocs.io/en/latest/) to see everything you can do.
+
 ## Installation
 
 pip
