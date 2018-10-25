@@ -1,6 +1,6 @@
 # Artron - multiprocess execution helper
 
-[![image](https://img.shields.io/pypi/l/artron.svg)](https://python.org/pypi/artron)
+![GitHub](https://img.shields.io/github/license/ahmet2mir/python-artron.svg)
 [![image](https://img.shields.io/pypi/pyversions/artron.svg)](https://python.org/pypi/artron)
 [![Build Status](https://travis-ci.org/ahmet2mir/python-artron.svg?branch=master)](https://travis-ci.org/ahmet2mir/python-artron)
 
