@@ -36,6 +36,7 @@ setup(
     keywords=['artron', 'multiprocessing', 'parallel'],
     packages=find_packages(),
     package_data = {'': ['README.md']},
+    python_requires=">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*",
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
